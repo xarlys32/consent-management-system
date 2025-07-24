@@ -2,8 +2,10 @@ package com.vw.consent.management.system.user.infrastructure.repository.postgres
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +24,8 @@ public class UserEntity {
     @MapKeyColumn(name = "consent_type")
     @Column(name = "enabled")
     private Map<String, Boolean> consents = new HashMap<>();
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
+    private Instant createdAt;
 
     public UserEntity() {}
 
@@ -43,5 +47,37 @@ public class UserEntity {
 
     public Map<String, Boolean> getConsents() {
         return consents;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setConsents(Map<String, Boolean> consents) {
+        this.consents = consents;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
     }
 }

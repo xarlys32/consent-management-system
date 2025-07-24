@@ -2,8 +2,11 @@ package com.vw.consent.management.system.user.domain.entity;
 
 import com.vw.consent.management.system.shared.domain.entity.BaseEntity;
 import com.vw.consent.management.system.shared.domain.valueobject.UserId;
+import com.vw.consent.management.system.user.domain.event.UserConsentCreateEvent;
 import com.vw.consent.management.system.user.domain.valueobject.UserConsent;
 import com.vw.consent.management.system.user.domain.valueobject.UserEmail;
+
+import java.time.Instant;
 
 public class User extends BaseEntity<UserId> {
     private final UserEmail userEmail;
@@ -25,6 +28,10 @@ public class User extends BaseEntity<UserId> {
 
     public UserConsent getUserConsent() {
         return userConsent;
+    }
+
+    public UserConsentCreateEvent userCreateEvent() {
+        return new UserConsentCreateEvent(this, Instant.now());
     }
 
     public static Builder builder() {
