@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class User {
 
     @Id
     private UUID id;
@@ -27,9 +27,9 @@ public class UserEntity {
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
     private Instant createdAt;
 
-    public UserEntity() {}
+    public User() {}
 
-    public UserEntity(UUID id, String email, Map<String, Boolean> consents) {
+    public User(UUID id, String email, Map<String, Boolean> consents) {
         this.id = id;
         this.email = email;
         this.consents = consents;
@@ -72,7 +72,7 @@ public class UserEntity {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
+        User that = (User) o;
         return Objects.equals(id, that.id) && Objects.equals(email, that.email);
     }
 

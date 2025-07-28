@@ -1,4 +1,4 @@
-package com.vw.consent.management.system.user.application.port;
+package com.vw.consent.management.system.user.application.port.out;
 
 import com.vw.consent.management.system.user.domain.event.UserEvent;
 

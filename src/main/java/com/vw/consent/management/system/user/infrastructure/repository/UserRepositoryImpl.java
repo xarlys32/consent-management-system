@@ -1,7 +1,7 @@
 package com.vw.consent.management.system.user.infrastructure.repository;
 import com.vw.consent.management.system.user.application.query.GetUserByEmailResponse;
 import com.vw.consent.management.system.user.domain.entity.User;
-import com.vw.consent.management.system.user.application.port.UserRepository;
+import com.vw.consent.management.system.user.application.port.out.UserRepository;
 
 import java.util.Optional;
 
