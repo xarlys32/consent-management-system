@@ -1,4 +1,4 @@
 package com.vw.consent.management.system.consent.application.query;
 
-public record GetConsentHistory(String userId) {
+public record GetConsentAuditHistory(String userId) {
 }
