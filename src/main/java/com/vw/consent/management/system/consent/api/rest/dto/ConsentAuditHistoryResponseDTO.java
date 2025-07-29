@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class ConsentHistoryResponseDTO {
-    private String userId;
+public class ConsentAuditHistoryResponseDTO {
+    private UUID userId;
     private List<ConsentDTO> consents;
 }
