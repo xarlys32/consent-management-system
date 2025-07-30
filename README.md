@@ -39,5 +39,16 @@ Porque tienen reglas distintas, objetivos distintos, y modelos de datos diferent
 https://hackernoon.com/using-postgres-effectively-in-spring-boot-applications
 Para la Base de datos relacional habra dos entidades, USER y USER_CONSENT. Ya que solo hay una entrada por tipo de consentimiento, en java usaremos un map Map<ConsentType, Boolean> para 
 ahorrarnos el desarrollo de la entidad consent.
+CREATE TABLE users (
+id UUID PRIMARY KEY,
+email VARCHAR(255) NOT NULL UNIQUE
+);
+CREATE TABLE user_consents (
+user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+consent_type VARCHAR(50) NOT NULL,
+enabled BOOLEAN NOT NULL,
+PRIMARY KEY (user_id, consent_type)
+);
+
 ## CQRS
 Los Command deben usar tipos primitivos o simples (String, UUID, boolean, etc.), no tipos del dominio como Email, ConsentStatus, etc.

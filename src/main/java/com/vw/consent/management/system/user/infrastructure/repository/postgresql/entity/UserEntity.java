@@ -10,9 +10,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false, unique = true)
@@ -23,16 +24,17 @@ public class User {
     @CollectionTable(name = "user_consents", joinColumns = @JoinColumn(name = "user_id"))
     @MapKeyColumn(name = "consent_type")
     @Column(name = "enabled")
-    private Map<String, Boolean> consents = new HashMap<>();
+    private Map<String, Boolean> consent = new HashMap<>();
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
     private Instant createdAt;
 
-    public User() {}
+    public UserEntity() {}
 
-    public User(UUID id, String email, Map<String, Boolean> consents) {
+    public UserEntity(UUID id, String email, Map<String, Boolean> consent, Instant createdAt) {
         this.id = id;
         this.email = email;
-        this.consents = consents;
+        this.consent = consent;
+        this.createdAt = createdAt;
     }
 
     // Getters y setters
@@ -45,8 +47,8 @@ public class User {
         return email;
     }
 
-    public Map<String, Boolean> getConsents() {
-        return consents;
+    public Map<String, Boolean> getConsent() {
+        return consent;
     }
 
     public void setId(UUID id) {
@@ -57,8 +59,8 @@ public class User {
         this.email = email;
     }
 
-    public void setConsents(Map<String, Boolean> consents) {
-        this.consents = consents;
+    public void setConsent(Map<String, Boolean> consent) {
+        this.consent = consent;
     }
 
     public Instant getCreatedAt() {
@@ -72,7 +74,7 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        User that = (User) o;
+        UserEntity that = (UserEntity) o;
         return Objects.equals(id, that.id) && Objects.equals(email, that.email);
     }
 

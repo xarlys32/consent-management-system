@@ -44,7 +44,8 @@ public class UserApplicationMapper {
         return com.vw.consent.management.system.user.domain.entity.User.builder()
                 .userEmail(new UserEmail(updateUserConsentCommand.email()))
                 .userConsent(new UserConsent(Map.of(ConsentType.fromValue(
-                        updateUserConsentCommand.consentType()).get(), updateUserConsentCommand.enabled())))
+                        updateUserConsentCommand.consentType()).orElseThrow(() -> new IllegalArgumentException("Invalid consent type: "
+                        + updateUserConsentCommand.consentType())), updateUserConsentCommand.enabled())))
                 .build();
     }
 
