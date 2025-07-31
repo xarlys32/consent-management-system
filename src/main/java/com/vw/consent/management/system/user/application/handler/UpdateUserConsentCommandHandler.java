@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Service
 public class UpdateUserConsentCommandHandler {
@@ -30,9 +31,9 @@ public class UpdateUserConsentCommandHandler {
 
     @Transactional
     public UpdateUserConsentResponse updateUserConsent(UpdateUserConsentCommand updateUserConsentCommand) {
-        User user = userRepository.findUserByEmail(new UserEmail(updateUserConsentCommand.email())).get();
+        User user = userRepository.findUserByEmail(new UserEmail(updateUserConsentCommand.email())).orElseThrow(() -> new NoSuchElementException(""));
         UserConsentUpdateEvent userConsentUpdateEvent = user.updateUserConsent(new UserConsent(Map.of(
-                ConsentType.fromValue(updateUserConsentCommand.consentType()).get(),
+                ConsentType.fromValue(updateUserConsentCommand.consentType()).orElseThrow(() -> new NoSuchElementException("")),
                 updateUserConsentCommand.enabled()
         )));
         updateUserConsent(user);

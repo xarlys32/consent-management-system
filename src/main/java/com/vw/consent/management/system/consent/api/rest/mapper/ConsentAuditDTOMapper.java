@@ -13,7 +13,7 @@ public class ConsentAuditDTOMapper {
     public ConsentAuditHistoryResponseDTO listOfGetConsentAuditHistoryResponseToResponseDTO(
             List<GetConsentAuditHistoryResponse> consentAuditHistoryResponseList) {
         return new ConsentAuditHistoryResponseDTO(
-                consentAuditHistoryResponseList.stream().findFirst().get().userId(),
+                consentAuditHistoryResponseList.stream().findFirst().orElseThrow(() -> new IllegalArgumentException("Invalid argument consentAuditHistoryResponseList")).userId(),
                 consentAuditHistoryResponseList.stream().map(consentAudit ->
                         new ConsentDTO(
                                 consentAudit.consentType(),

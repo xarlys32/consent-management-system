@@ -12,7 +12,7 @@ public class ConsentAuditApplicationMapper {
     public ConsentAudit addConsentAuditCommandToConsentAudit(AddConsentAuditCommand addConsentAuditCommand) {
         return ConsentAudit.builder()
                 .userId(new UserId(addConsentAuditCommand.userId()))
-                .consentType(ConsentType.fromValue(addConsentAuditCommand.consentType()).get())
+                .consentType(ConsentType.fromValue(addConsentAuditCommand.consentType()).orElseThrow(()-> new IllegalArgumentException("")))
                 .enabled(addConsentAuditCommand.enabled())
                 .build();
     }

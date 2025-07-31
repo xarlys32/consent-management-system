@@ -36,9 +36,16 @@ Porque tienen reglas distintas, objetivos distintos, y modelos de datos diferent
     Además, se menciona que el estado de consentimiento se reconstruye aplicando los eventos en orden, lo cual es lógica específica del dominio de consentimientos.
 
 ## DB POSTGRESQL
+Arrancar con docker run -d --name postgres-container -p 5432:5432 -e POSTGRES_PASSWORD=admin postgres // docker start postgres-container<br/>
+Bajar en docker dpage/pgadmin4<br/>
 https://hackernoon.com/using-postgres-effectively-in-spring-boot-applications
 Para la Base de datos relacional habra dos entidades, USER y USER_CONSENT. Ya que solo hay una entrada por tipo de consentimiento, en java usaremos un map Map<ConsentType, Boolean> para 
 ahorrarnos el desarrollo de la entidad consent.
+docker exec -it postgres-container bash
+psql -h localhost -U postgres
+CREATE DATABASE consent_management;
+\l ;(Comprueba la bd)
+\c consent_management; (usa esa bd)
 CREATE TABLE users (
 id UUID PRIMARY KEY,
 email VARCHAR(255) NOT NULL UNIQUE
@@ -49,6 +56,7 @@ consent_type VARCHAR(50) NOT NULL,
 enabled BOOLEAN NOT NULL,
 PRIMARY KEY (user_id, consent_type)
 );
+\dt(mostrar tablas)
 
 ## CQRS
 Los Command deben usar tipos primitivos o simples (String, UUID, boolean, etc.), no tipos del dominio como Email, ConsentStatus, etc.

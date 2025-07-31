@@ -18,6 +18,7 @@ public class GetUserByEmailQueryHandler {
     }
 
     public GetUserByEmailResponse getUserByEmail(GetUserByEmailQuery getUserQuery) {
-       return userApplicationMapper.userToGetUserByEmailResponse(userRepository.findUserByEmail(new UserEmail(getUserQuery.email())).get());
+        return userRepository.findUserByEmail(new UserEmail(getUserQuery.email())).map(
+                userApplicationMapper::userToGetUserByEmailResponse).orElseThrow(()-> new IllegalArgumentException(""));
     }
 }

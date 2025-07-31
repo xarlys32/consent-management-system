@@ -21,7 +21,7 @@ public class UserEntityMapper {
                 userEntity.getConsent().entrySet().stream()
                         .collect(Collectors.toMap(
                                 e -> ConsentType.fromValue(
-                                        e.getKey()).get(), Map.Entry::getValue)),
+                                        e.getKey()).orElseThrow(() -> new IllegalArgumentException("")), Map.Entry::getValue)),
                 userEntity.getCreatedAt());
     }
 
@@ -39,7 +39,7 @@ public class UserEntityMapper {
                 .userEmail(new UserEmail(userEntity.getEmail()))
                 .userConsent(new UserConsent(userEntity.getConsent().entrySet().stream().collect(Collectors.toMap(
                         e -> ConsentType.fromValue(
-                                e.getKey()).get(), Map.Entry::getValue))))
+                                e.getKey()).orElseThrow(()-> new IllegalArgumentException("")), Map.Entry::getValue))))
                 .userCreatedAt(new UserCreatedAt(userEntity.getCreatedAt()))
                 .build();
     }
