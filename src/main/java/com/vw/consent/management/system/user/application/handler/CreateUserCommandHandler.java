@@ -24,20 +24,15 @@ public class CreateUserCommandHandler {
 
     @Transactional
     public CreateUserResponse createUser(CreateUserCommand createUserCommand){
-        // pasar command a modelo de dominio
         User user = userApplicationMapper.createUserCommandToUser(createUserCommand);
-        // Validar dominio
-        // recibir evento de usuario y 1º consent
-        UserConsentCreateEvent createEvent = user.userCreateEvent();
-        // guardar en repo si user
+        UserConsentCreateEvent createEvent = user.createUser();
         insertUser(user);
-        // publicar evento
         publishEvent(createEvent);
         return userApplicationMapper.userToCreateUserResponse(user);
     }
 
     private void insertUser(User user) {
-        userRepository.createUser(user);
+        user.setId(userRepository.createUser(user).orElseThrow(() -> new RuntimeException("Error to insert")).getId());
     }
 
 

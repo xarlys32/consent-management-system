@@ -19,7 +19,7 @@ public class UserApplicationMapper {
         return User.builder()
                 .userEmail(new UserEmail(createUserCommand.email()))
                 .userConsent(new UserConsent( Map.of(
-                        ConsentType.valueOf(createUserCommand.consentType()),
+                        ConsentType.fromValue(createUserCommand.consentType()).orElseThrow(() -> new IllegalArgumentException("")),
                         createUserCommand.enabled()
                 )))
                 .build();

@@ -48,7 +48,8 @@ CREATE DATABASE consent_management;
 \c consent_management; (usa esa bd)
 CREATE TABLE users (
 id UUID PRIMARY KEY,
-email VARCHAR(255) NOT NULL UNIQUE
+email VARCHAR(255) NOT NULL UNIQUE.
+created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 CREATE TABLE user_consents (
 user_id UUID REFERENCES users(id) ON DELETE CASCADE,
@@ -58,5 +59,28 @@ PRIMARY KEY (user_id, consent_type)
 );
 \dt(mostrar tablas)
 
+
+## DB MONGO
+docker run -d --name mongodb-container -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=adminpass mongo
+docker start mongodb-container
+### Execute internal scripts
+    docker exec -it mongodb-container mongosh "mongodb://admin:adminpass@localhost:27017"
+    use consentAuditDatabase
+    db.createUser({
+      user: "auditUser",
+      pwd: "auditPass",
+      roles: [{ role: "readWrite", db: "consentAuditDatabase" }]
+    })
+    db.createCollection("consentAuditHistory")
+
 ## CQRS
 Los Command deben usar tipos primitivos o simples (String, UUID, boolean, etc.), no tipos del dominio como Email, ConsentStatus, etc.
+
+## Kafka 
+https://www.geeksforgeeks.org/advance-java/spring-boot-integration-with-kafka/
+crear un docker compose y añadir la conf en el application properties.
+crear los config del publisher y el consumer
+Crear una carpeta messaging contracts el cual contendra el modelo avro que compartira
+desde terminal intelij docker-compose up -d
+para generar las clases avro apartir de avsc generar con gradle init el libs versions toml y crear en build gradle customAvroCodeGeneration
+https://www.javacodegeeks.com/generate-java-classes-from-avro-schemas-using-gradle.html

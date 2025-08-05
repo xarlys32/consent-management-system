@@ -5,6 +5,7 @@ import com.vw.consent.management.system.user.api.rest.dto.UserGetResponseDTO;
 import com.vw.consent.management.system.user.api.rest.dto.UserUpdatedResponseDTO;
 import com.vw.consent.management.system.user.api.rest.mapper.UserDTOMapper;
 import com.vw.consent.management.system.user.application.command.UpdateUserConsentCommand;
+import com.vw.consent.management.system.user.application.command.UpdateUserConsentResponse;
 import com.vw.consent.management.system.user.application.handler.CreateUserCommandHandler;
 import com.vw.consent.management.system.user.application.command.CreateUserCommand;
 import com.vw.consent.management.system.user.application.command.CreateUserResponse;
@@ -12,6 +13,7 @@ import com.vw.consent.management.system.user.application.handler.GetUserByEmailQ
 import com.vw.consent.management.system.user.application.handler.UpdateUserConsentCommandHandler;
 import com.vw.consent.management.system.user.application.query.GetUserByEmailQuery;
 import com.vw.consent.management.system.user.application.query.GetUserByEmailResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/")
+    @Operation(summary = "Create user")
     public ResponseEntity<UserCreatedResponseDTO> createUser(@RequestBody CreateUserCommand createUserCommand) {
         CreateUserResponse userCreatedResponse = createUserCommandHandler.createUser(createUserCommand);
         UserCreatedResponseDTO responseDTO = userDTOMapper.createUserResponseToDTO(userCreatedResponse);
@@ -48,8 +51,9 @@ public class UserController {
     }
 
     @PutMapping("/")
+    @Operation(summary = "Update user")
     public ResponseEntity<UserUpdatedResponseDTO> updateUserConsent(@RequestBody UpdateUserConsentCommand updateConsentCommand) {
-        CreateUserResponse userCreatedResponse = updateUserConsentCommandHandler.updateUserConsent(updateConsentCommand);
+        UpdateUserConsentResponse userCreatedResponse = updateUserConsentCommandHandler.updateUserConsent(updateConsentCommand);
         UserUpdatedResponseDTO responseDTO = userDTOMapper.updateConsentResponseToDTO(userCreatedResponse);
         return ResponseEntity.ok(responseDTO);
     }

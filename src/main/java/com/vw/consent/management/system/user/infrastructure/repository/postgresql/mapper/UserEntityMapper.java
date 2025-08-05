@@ -25,12 +25,30 @@ public class UserEntityMapper {
                 userEntity.getCreatedAt());
     }
 
-    public UserEntity userToUserEntity(User user) {
-        return new UserEntity(user.getId().getValue(), user.getUserEmail().getValue(),
-                user.getUserConsent().asMap().entrySet().stream()
+    public UserEntity userToUserEntityInsert(User user) {
+        return UserEntity.builder()
+                //.id(user.getId().getValue())
+                .email(user.getUserEmail().getValue())
+                .consent(user.getUserConsent().asMap().entrySet().stream()
                         .collect(Collectors.toMap(
-                e ->  e.getKey().getValue(), Map.Entry::getValue)),
-                user.getUserCreatedAt().getValue());
+                                entry -> entry.getKey().toString(),
+                                Map.Entry::getValue
+                        )))
+                .createdAt(user.getUserCreatedAt().getValue())
+                .build();
+    }
+
+    public UserEntity userToUserEntityUpdate(User user) {
+        return UserEntity.builder()
+                .id(user.getId().getValue())
+                .email(user.getUserEmail().getValue())
+                .consent(user.getUserConsent().asMap().entrySet().stream()
+                        .collect(Collectors.toMap(
+                                entry -> entry.getKey().toString(),
+                                Map.Entry::getValue
+                        )))
+                .createdAt(user.getUserCreatedAt().getValue())
+                .build();
     }
 
     public User userEntityToUser(UserEntity userEntity) {

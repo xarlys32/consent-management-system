@@ -34,7 +34,8 @@ public class User extends BaseEntity<UserId> {
         return userCreatedAt;
     }
 
-    public UserConsentCreateEvent userCreateEvent() {
+    public UserConsentCreateEvent createUser() {
+        userCreatedAt = new UserCreatedAt(Instant.now());
         return new UserConsentCreateEvent(this);
     }
 

@@ -22,13 +22,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> createUser(User user) {
         return Optional.ofNullable(userEntityMapper.userEntityToUser(
-                userPostgresRepository.save(userEntityMapper.userToUserEntity(user))));
+                userPostgresRepository.save(userEntityMapper.userToUserEntityInsert(user))));
     }
 
     @Override
     public User updateConsentUser(User user) {
         return userEntityMapper.userEntityToUser(
-                userPostgresRepository.save(userEntityMapper.userToUserEntity(user)));
+                userPostgresRepository.save(userEntityMapper.userToUserEntityUpdate(user)));
     }
 
     @Override
