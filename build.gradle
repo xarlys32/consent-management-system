@@ -1,3 +1,10 @@
+
+buildscript {
+    dependencies {
+        classpath libs.avro.tools
+    }
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.3'
@@ -17,6 +24,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+    avroTools
 }
 
 repositories {
@@ -24,6 +32,8 @@ repositories {
 }
 
 dependencies {
+    avroTools "org.apache.avro:avro-tools:1.11.1"
+    implementation libs.avro
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -37,6 +47,36 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
 	testImplementation 'uk.co.jemos.podam:podam:8.0.2.RELEASE'
 	implementation 'org.postgresql:postgresql'
+}
+
+tasks.register('customAvroCodeGeneration', Exec) {
+    def avroToolsConfig = configurations.detachedConfiguration(
+            dependencies.create("org.apache.avro:avro-tools:1.11.1")
+    )
+    avroToolsConfig.transitive = false
+
+    def avroToolsJar = avroToolsConfig.resolve().find { it.name.contains("avro-tools") }
+
+    if (!avroToolsJar) {
+        throw new GradleException("Not found avro-tools JAR.")
+    }
+
+    def avroSchemasDir = file("src/main/java/com/vw/consent/management/system/kafka_model/avro")
+    def avroOutputDir = file("src/main/java")
+
+    inputs.dir(avroSchemasDir)
+    outputs.dir(avroOutputDir)
+
+    commandLine = [
+            "java", "-jar", avroToolsJar.absolutePath,
+            "compile", "schema",
+            avroSchemasDir.absolutePath,
+            avroOutputDir.absolutePath
+    ]
+}
+
+tasks.withType(JavaCompile).configureEach {
+    dependsOn('customAvroCodeGeneration')
 }
 
 tasks.named('test') {

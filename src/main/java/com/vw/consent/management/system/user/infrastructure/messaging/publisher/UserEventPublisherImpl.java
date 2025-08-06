@@ -1,4 +1,4 @@
-package com.vw.consent.management.system.user.infrastructure.messaging.publisher.kafka;
+package com.vw.consent.management.system.user.infrastructure.messaging.publisher;
 
 import com.vw.consent.management.system.user.application.port.out.UserEventPublisher;
 import com.vw.consent.management.system.user.domain.event.UserEvent;

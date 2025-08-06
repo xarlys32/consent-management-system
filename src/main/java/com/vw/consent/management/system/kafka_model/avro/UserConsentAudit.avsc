@@ -1,0 +1,34 @@
+{
+  "namespace": "com.vw.consent.management.system.kafka_model.avro.dto",
+  "type": "record",
+  "name": "ConsentChangeEvent",
+  "fields": [
+    {
+      "name": "userId",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "consentType",
+      "type": {
+        "type": "enum",
+        "name": "ConsentType",
+        "symbols": ["EMAIL_NOTIFICATIONS", "SMS_NOTIFICATIONS"]
+      }
+    },
+    {
+      "name": "enabled",
+      "type": "boolean"
+    },
+    {
+      "name": "eventTimestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}
