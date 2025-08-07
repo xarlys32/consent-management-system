@@ -1,10 +1,4 @@
 
-buildscript {
-    dependencies {
-        classpath libs.avro.tools
-    }
-}
-
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.3'
@@ -32,7 +26,6 @@ repositories {
 }
 
 dependencies {
-    avroTools "org.apache.avro:avro-tools:1.11.1"
     implementation libs.avro
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
