@@ -1,5 +1,5 @@
 {
-  "namespace": "com.vw.consent.management.system.kafka_model.avro.dto",
+  "namespace": "com.vw.consent.management.system.kafka_model.dto",
   "type": "record",
   "name": "ConsentChangeEvent",
   "fields": [

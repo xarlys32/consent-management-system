@@ -2,14 +2,22 @@ package com.vw.consent.management.system.user.infrastructure.messaging.publisher
 
 import com.vw.consent.management.system.user.application.port.out.UserEventPublisher;
 import com.vw.consent.management.system.user.domain.event.UserEvent;
+import com.vw.consent.management.system.user.infrastructure.messaging.publisher.kafka.KafkaProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class UserEventPublisherImpl implements UserEventPublisher {
+    private final KafkaProducer kafkaProducer;
+
+    public UserEventPublisherImpl(KafkaProducer kafkaProducer) {
+        this.kafkaProducer = kafkaProducer;
+    }
+
     @Override
     public <T extends UserEvent> void publish(T event) {
         log.info("Sending event {}", event);
+        kafkaProducer.send(event);
     }
 }
