@@ -2,16 +2,18 @@ package com.vw.consent.management.system.consent.infrastructure.messaging.listen
 
 import com.vw.consent.management.system.consent.infrastructure.messaging.listener.kafka.config.KafkaConsumer;
 import com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class ConsentKafkaMessageConsumer implements KafkaConsumer<ConsentChangeEvent> {
 
-    @KafkaListener(topics = "user-consent-topic", groupId = "user-consent-event")
-    public void receive(List<ConsentChangeEvent> messages, List<String> keys, List<Integer> partitions, List<Long> offsets) {
-
+    @KafkaListener(topics = "user-consent-topic")
+    public void receiveSingle(ConsentChangeEvent message) {
+        log.info("Receive single event "+ message);
     }
 }
