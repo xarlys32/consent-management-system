@@ -27,7 +27,6 @@ public class UserEntityMapper {
 
     public UserEntity userToUserEntityInsert(User user) {
         return UserEntity.builder()
-                //.id(user.getId().getValue())
                 .email(user.getUserEmail().getValue())
                 .consent(user.getUserConsent().asMap().entrySet().stream()
                         .collect(Collectors.toMap(

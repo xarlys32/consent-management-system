@@ -12,7 +12,7 @@ public class KafkaProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(ConsentChangeEvent message) {
-        kafkaTemplate.send("topic", message);
+    public void send(String topic, ConsentChangeEvent message) {
+        kafkaTemplate.send(topic, message);
     }
 }
