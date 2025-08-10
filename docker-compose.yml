@@ -45,11 +45,31 @@ services:
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
 
 
- # postgres:
-    #   image: postgres:latest
-    # container_name: postgres-container
-        # ports:
-    #  - "5432:5432"
-      # environment:
-      #  POSTGRES_PASSWORD: admin
-    #  POSTGRES_DB: consent_management
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: consent_management
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/infrastructure/migrations/postgres:/docker-entrypoint-initdb.d:ro
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-container
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpass
+    volumes:
+      - mongo_data:/data/db
+      - ./src/infrastructure/migrations/mongodb:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  mongo_data:
+  postgres_data:
