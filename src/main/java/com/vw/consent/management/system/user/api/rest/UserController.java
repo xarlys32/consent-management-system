@@ -43,6 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/")
+    @Operation(summary = "Get user")
     public ResponseEntity<UserGetResponseDTO> getUser(@RequestParam String email) {
         GetUserByEmailResponse getUserResponse = getUserByEmailQueryHandler.getUserByEmail(new GetUserByEmailQuery(email));
         UserGetResponseDTO responseDTO = userDTOMapper.getUserByEmailResponseToDTO(getUserResponse);
