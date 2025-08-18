@@ -2,17 +2,20 @@ package com.vw.consent.management.system.consent.domain.entity;
 
 import com.vw.consent.management.system.shared.domain.valueobject.ConsentType;
 import com.vw.consent.management.system.shared.domain.valueobject.UserId;
+import com.vw.consent.management.system.user.domain.valueobject.UserEmail;
 
 import java.time.Instant;
 
 public class ConsentAudit {
     private final UserId userId;
+    private final UserEmail userEmail;
     private final ConsentType consentType;
     private final boolean enabled;
     private final Instant timestamp;
 
     private ConsentAudit(Builder builder) {
         userId = builder.userId;
+        userEmail = builder.userEmail;
         consentType = builder.consentType;
         enabled = builder.enabled;
         timestamp = builder.timestamp;
@@ -20,6 +23,10 @@ public class ConsentAudit {
 
     public UserId getUserId() {
         return userId;
+    }
+
+    public UserEmail getUserEmail() {
+        return userEmail;
     }
 
     public ConsentType getConsentType() {
@@ -41,6 +48,7 @@ public class ConsentAudit {
 
     public static final class Builder {
         private UserId userId;
+        private UserEmail userEmail;
         private ConsentType consentType;
         private boolean enabled;
         private Instant timestamp;
@@ -50,6 +58,11 @@ public class ConsentAudit {
 
         public Builder userId(UserId val) {
             userId = val;
+            return this;
+        }
+
+        public Builder userEmail(UserEmail val) {
+            userEmail = val;
             return this;
         }
 

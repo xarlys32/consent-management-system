@@ -1,6 +1,7 @@
 package com.vw.consent.management.system.user.infrastructure.repository;
 import com.vw.consent.management.system.user.domain.entity.User;
 import com.vw.consent.management.system.user.application.port.out.UserRepository;
+import com.vw.consent.management.system.user.domain.exception.DuplicateMailException;
 import com.vw.consent.management.system.user.domain.valueobject.UserEmail;
 import com.vw.consent.management.system.user.infrastructure.repository.postgresql.UserPostgresRepository;
 import com.vw.consent.management.system.user.infrastructure.repository.postgresql.mapper.UserEntityMapper;
@@ -21,6 +22,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> createUser(User user) {
+        if (findUserByEmail(user.getUserEmail()).isPresent()) {
+            throw new DuplicateMailException(user.getUserEmail().getValue());
+        }
         return Optional.ofNullable(userEntityMapper.userEntityToUser(
                 userPostgresRepository.save(userEntityMapper.userToUserEntityInsert(user))));
     }

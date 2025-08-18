@@ -1,10 +1,9 @@
 
-CREATE DATABASE consent_management;
 \connect consent_management;
 
 CREATE TABLE  IF NOT EXISTS users (
 id UUID PRIMARY KEY,
-email VARCHAR(255) NOT NULL UNIQUE.
+email VARCHAR(255) NOT NULL UNIQUE,
 created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 CREATE TABLE  IF NOT EXISTS user_consents (

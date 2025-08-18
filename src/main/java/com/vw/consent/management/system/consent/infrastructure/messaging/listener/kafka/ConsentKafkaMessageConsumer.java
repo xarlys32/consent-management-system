@@ -15,17 +15,18 @@ import java.util.UUID;
 @Service
 public class ConsentKafkaMessageConsumer implements KafkaConsumer<ConsentChangeEvent> {
 
-    private  final AddConsentAuditCommandHandler addConsentAuditCommandHandler;
+    private final AddConsentAuditCommandHandler addConsentAuditCommandHandler;
 
     public ConsentKafkaMessageConsumer(AddConsentAuditCommandHandler addConsentAuditCommandHandler) {
         this.addConsentAuditCommandHandler = addConsentAuditCommandHandler;
     }
 
-    @KafkaListener(topics = "user-consent-topic")
+    @KafkaListener(topics = "user-consent-topic", groupId = "user-consent-event")
     public void receiveSingle(ConsentChangeEvent message, Acknowledgment ack) {
         log.info("Receive single event "+ message);
         addConsentAuditCommandHandler.addConsentAudit(new AddConsentAuditCommand(
                 UUID.fromString(message.getUserId().toString()),
+                message.getEmail().toString(),
                 message.getConsentType().name(),
                 message.getEnabled(),
                 message.getEventTimestamp()));

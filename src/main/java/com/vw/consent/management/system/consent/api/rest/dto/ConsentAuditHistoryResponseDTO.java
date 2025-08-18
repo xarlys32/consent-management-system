@@ -10,5 +10,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ConsentAuditHistoryResponseDTO {
     private UUID userId;
+    private String email;
     private List<ConsentDTO> consents;
 }

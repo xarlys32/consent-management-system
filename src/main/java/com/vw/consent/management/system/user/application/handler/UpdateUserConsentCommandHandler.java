@@ -8,6 +8,8 @@ import com.vw.consent.management.system.user.application.port.out.UserEventPubli
 import com.vw.consent.management.system.user.application.port.out.UserRepository;
 import com.vw.consent.management.system.user.domain.entity.User;
 import com.vw.consent.management.system.user.domain.event.UserConsentUpdateEvent;
+import com.vw.consent.management.system.user.domain.exception.ConsentTypeNotValidException;
+import com.vw.consent.management.system.user.domain.exception.UserEmailNotFoundException;
 import com.vw.consent.management.system.user.domain.valueobject.UserConsent;
 import com.vw.consent.management.system.user.domain.valueobject.UserEmail;
 import org.springframework.stereotype.Service;
@@ -31,9 +33,9 @@ public class UpdateUserConsentCommandHandler {
 
     @Transactional
     public UpdateUserConsentResponse updateUserConsent(UpdateUserConsentCommand updateUserConsentCommand) {
-        User user = userRepository.findUserByEmail(new UserEmail(updateUserConsentCommand.email())).orElseThrow(() -> new NoSuchElementException(""));
+        User user = userRepository.findUserByEmail(new UserEmail(updateUserConsentCommand.email())).orElseThrow(() -> new UserEmailNotFoundException(updateUserConsentCommand.email()));
         UserConsentUpdateEvent userConsentUpdateEvent = user.updateUserConsent(new UserConsent(Map.of(
-                ConsentType.fromValue(updateUserConsentCommand.consentType()).orElseThrow(() -> new NoSuchElementException("")),
+                ConsentType.fromValue(updateUserConsentCommand.consentType()).orElseThrow(() -> new ConsentTypeNotValidException(updateUserConsentCommand.consentType())),
                 updateUserConsentCommand.enabled()
         )));
         updateUserConsent(user);

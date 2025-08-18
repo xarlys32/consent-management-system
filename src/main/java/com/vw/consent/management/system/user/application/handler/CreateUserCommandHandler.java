@@ -23,7 +23,7 @@ public class CreateUserCommandHandler {
     }
 
     @Transactional
-    public CreateUserResponse createUser(CreateUserCommand createUserCommand){
+    public CreateUserResponse createUser(CreateUserCommand createUserCommand) {
         User user = userApplicationMapper.createUserCommandToUser(createUserCommand);
         UserConsentCreateEvent createEvent = user.createUser();
         insertUser(user);

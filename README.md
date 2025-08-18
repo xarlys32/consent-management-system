@@ -64,14 +64,16 @@ PRIMARY KEY (user_id, consent_type)
 docker run -d --name mongodb-container -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=adminpass mongo
 docker start mongodb-container
 ### Execute internal scripts
-    docker exec -it mongodb-container mongosh "mongodb://admin:adminpass@localhost:27017"
-    use consentAuditDatabase
+    docker exec -it mongodb-container mongosh "mongodb://consentUser:consentPass@localhost:27017"
+    use consentAuditDb
     db.createUser({
       user: "auditUser",
       pwd: "auditPass",
-      roles: [{ role: "readWrite", db: "consentAuditDatabase" }]
+      roles: [{ role: "readWrite", db: "consentAuditDb" }]
     })
     db.createCollection("consentAuditHistory")
+
+show collections
 
 ## CQRS
 Los Command deben usar tipos primitivos o simples (String, UUID, boolean, etc.), no tipos del dominio como Email, ConsentStatus, etc.

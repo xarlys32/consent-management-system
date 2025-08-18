@@ -47,7 +47,6 @@ services:
 
   postgres:
     image: postgres:latest
-    container_name: postgres-container
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
@@ -60,12 +59,11 @@ services:
 
   mongodb:
     image: mongo:latest
-    container_name: mongodb-container
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: adminpass
+      MONGO_INITDB_ROOT_USERNAME: consentUser
+      MONGO_INITDB_ROOT_PASSWORD: consentPass
     volumes:
       - mongo_data:/data/db
       - ./infrastructure/migrations/mongodb:/docker-entrypoint-initdb.d:ro

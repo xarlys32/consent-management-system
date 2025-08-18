@@ -13,7 +13,12 @@ import com.vw.consent.management.system.user.application.handler.GetUserByEmailQ
 import com.vw.consent.management.system.user.application.handler.UpdateUserConsentCommandHandler;
 import com.vw.consent.management.system.user.application.query.GetUserByEmailQuery;
 import com.vw.consent.management.system.user.application.query.GetUserByEmailResponse;
+import com.vw.consent.management.system.user.domain.exception.ConsentTypeNotValidException;
+import com.vw.consent.management.system.user.domain.exception.InvalidUserMail;
+import com.vw.consent.management.system.user.domain.exception.DuplicateMailException;
+import com.vw.consent.management.system.user.domain.exception.UserEmailNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,4 +63,25 @@ public class UserController {
         UserUpdatedResponseDTO responseDTO = userDTOMapper.updateConsentResponseToDTO(userCreatedResponse);
         return ResponseEntity.ok(responseDTO);
     }
+
+    @ExceptionHandler({DuplicateMailException.class})
+    public ResponseEntity<String> userExistsException(DuplicateMailException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler({InvalidUserMail.class})
+    public ResponseEntity<String> invalidEmailException(InvalidUserMail ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({UserEmailNotFoundException.class})
+    public ResponseEntity<String> userNotFoundException(UserEmailNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({ConsentTypeNotValidException.class})
+    public ResponseEntity<String> consentTypeNotValid(ConsentTypeNotValidException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 }

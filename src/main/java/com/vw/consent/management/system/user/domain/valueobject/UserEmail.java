@@ -1,5 +1,7 @@
 package com.vw.consent.management.system.user.domain.valueobject;
 
+import com.vw.consent.management.system.user.domain.exception.InvalidUserMail;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -12,7 +14,7 @@ public class UserEmail {
 
     public UserEmail(String value) {
         if (value == null || !EMAIL_PATTERN.matcher(value).matches()) {
-            throw new IllegalArgumentException("Invalid email: " + value);
+            throw new InvalidUserMail(value);
         }
         this.value = value.toLowerCase();
     }

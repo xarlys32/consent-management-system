@@ -9,15 +9,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "consent_audit")
+@Document(collection = "consentAuditHistory")
 public class ConsentAuditEntity {
     @Id
-    private String userId;
+    private UUID userId;
     @Field(name = "email")
     private String email;
     @Field(name = "consentType")

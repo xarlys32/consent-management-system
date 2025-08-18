@@ -23,12 +23,14 @@ public class ConsentAuditRepositoryImpl implements ConsentAuditRepository {
 
     @Override
     public Optional<ConsentAudit> save(ConsentAudit consentAudit) {
-        consentAuditMongoRepository.save(consentAuditEntityMapper.consentAuditToEntity(consentAudit));
-        return Optional.empty();
+        return Optional.of(consentAuditEntityMapper.consentAuditEntityToDom(
+                consentAuditMongoRepository.save(
+                        consentAuditEntityMapper.consentAuditToEntity(consentAudit))));
     }
 
     @Override
     public List<ConsentAudit> getConsentAuditsByUserId(UUID userId) {
-        return List.of();
+        return consentAuditMongoRepository.findByUserId(userId).stream().map(
+                        consentAuditEntityMapper::consentAuditEntityToDom).toList();
     }
 }
