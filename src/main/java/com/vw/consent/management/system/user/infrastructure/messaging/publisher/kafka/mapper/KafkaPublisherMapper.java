@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 @Component
 public class KafkaPublisherMapper { // Refactor
     public <T extends UserEvent> ConsentChangeEvent userEventToConsentChangeEvent(T userEvent) {
-        return new ConsentChangeEvent(userEvent.getUser().getId().getValue().toString(),
-                userEvent.getUser().getUserEmail().getValue(),
-                ConsentType.valueOf(userEvent.getUser().getUserConsent().asMap().keySet().stream()
+        return new ConsentChangeEvent(userEvent.getUserId().toString(),
+                userEvent.getUserEmail(),
+                ConsentType.valueOf(userEvent.getUserConsent().keySet().stream()
                         .map(Object::toString)
                         .collect(Collectors.joining(""))),
-                Boolean.valueOf(userEvent.getUser().getUserConsent().asMap().values().stream()
+                Boolean.valueOf(userEvent.getUserConsent().values().stream()
                         .map(Object::toString)
                         .collect(Collectors.joining(""))),
                 userEvent.getOccurredOn());

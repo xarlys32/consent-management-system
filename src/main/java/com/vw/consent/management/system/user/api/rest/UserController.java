@@ -14,7 +14,7 @@ import com.vw.consent.management.system.user.application.handler.UpdateUserConse
 import com.vw.consent.management.system.user.application.query.GetUserByEmailQuery;
 import com.vw.consent.management.system.user.application.query.GetUserByEmailResponse;
 import com.vw.consent.management.system.user.domain.exception.ConsentTypeNotValidException;
-import com.vw.consent.management.system.user.domain.exception.InvalidUserMail;
+import com.vw.consent.management.system.user.domain.exception.InvalidUserMailException;
 import com.vw.consent.management.system.user.domain.exception.DuplicateMailException;
 import com.vw.consent.management.system.user.domain.exception.UserEmailNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,8 +69,8 @@ public class UserController {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler({InvalidUserMail.class})
-    public ResponseEntity<String> invalidEmailException(InvalidUserMail ex) {
+    @ExceptionHandler({InvalidUserMailException.class})
+    public ResponseEntity<String> invalidEmailException(InvalidUserMailException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

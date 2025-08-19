@@ -27,7 +27,9 @@ public class CreateUserCommandHandler {
         User user = userApplicationMapper.createUserCommandToUser(createUserCommand);
         UserConsentCreateEvent createEvent = user.createUser();
         insertUser(user);
-        publishEvent(createEvent);
+        if (createEvent != null) {
+            publishEvent(createEvent);
+        }
         return userApplicationMapper.userToCreateUserResponse(user);
     }
 

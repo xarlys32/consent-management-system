@@ -18,17 +18,17 @@ public class UserEntityMapper {
     public GetUserByEmailResponse userEntityToGetUserByEmailResponse(UserEntity userEntity) {
         return new GetUserByEmailResponse(userEntity.getId(),
                 userEntity.getEmail(),
-                userEntity.getConsent().entrySet().stream()
+                userEntity.getConsent() != null ? userEntity.getConsent().entrySet().stream()
                         .collect(Collectors.toMap(
                                 e -> ConsentType.fromValue(
-                                        e.getKey()).orElseThrow(() -> new IllegalArgumentException("")), Map.Entry::getValue)),
+                                        e.getKey()).orElseThrow(() -> new IllegalArgumentException("")), Map.Entry::getValue)) : null,
                 userEntity.getCreatedAt());
     }
 
     public UserEntity userToUserEntityInsert(User user) {
         return UserEntity.builder()
                 .email(user.getUserEmail().getValue())
-                .consent(user.getUserConsent().asMap().entrySet().stream()
+                .consent(user.getUserConsent() == null ? null : user.getUserConsent().asMap().entrySet().stream()
                         .collect(Collectors.toMap(
                                 entry -> entry.getKey().toString(),
                                 Map.Entry::getValue
@@ -54,7 +54,7 @@ public class UserEntityMapper {
         return User.builder()
                 .userId(new UserId(userEntity.getId()))
                 .userEmail(new UserEmail(userEntity.getEmail()))
-                .userConsent(new UserConsent(userEntity.getConsent().entrySet().stream().collect(Collectors.toMap(
+                .userConsent(userEntity.getConsent() == null ? null : new UserConsent(userEntity.getConsent().entrySet().stream().collect(Collectors.toMap(
                         e -> ConsentType.fromValue(
                                 e.getKey()).orElseThrow(()-> new IllegalArgumentException("")), Map.Entry::getValue))))
                 .userCreatedAt(new UserCreatedAt(userEntity.getCreatedAt()))

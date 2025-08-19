@@ -7,6 +7,7 @@ import com.vw.consent.management.system.user.application.command.UpdateUserConse
 import com.vw.consent.management.system.user.application.command.UpdateUserConsentResponse;
 import com.vw.consent.management.system.user.application.query.GetUserByEmailResponse;
 import com.vw.consent.management.system.user.domain.entity.User;
+import com.vw.consent.management.system.user.domain.exception.ConsentTypeNotValidException;
 import com.vw.consent.management.system.user.domain.valueobject.UserConsent;
 import com.vw.consent.management.system.user.domain.valueobject.UserEmail;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,8 @@ public class UserApplicationMapper {
     public User createUserCommandToUser(CreateUserCommand createUserCommand){
         return User.builder()
                 .userEmail(new UserEmail(createUserCommand.email()))
-                .userConsent(new UserConsent( Map.of(
-                        ConsentType.fromValue(createUserCommand.consentType()).orElseThrow(() -> new IllegalArgumentException("")),
+                .userConsent(createUserCommand.consentType().isEmpty() ? null : new UserConsent( Map.of(
+                        ConsentType.fromValue(createUserCommand.consentType()).orElseThrow(() -> new ConsentTypeNotValidException(createUserCommand.consentType())),
                         createUserCommand.enabled()
                 )))
                 .build();
@@ -28,7 +29,7 @@ public class UserApplicationMapper {
     public CreateUserResponse userToCreateUserResponse(User user) {
         return new CreateUserResponse(user.getId().getValue(),
                 user.getUserEmail().getValue(),
-                user.getUserConsent().asMap());
+                user.getUserConsent()!= null ? user.getUserConsent().asMap() : null);
     }
 
     public GetUserByEmailResponse userToGetUserByEmailResponse(User user) {

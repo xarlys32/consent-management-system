@@ -5,7 +5,11 @@ import com.vw.consent.management.system.consent.api.rest.mapper.ConsentAuditDTOM
 import com.vw.consent.management.system.consent.application.handler.GetConsentAuditHistoryQueryHandler;
 import com.vw.consent.management.system.consent.application.query.GetConsentAuditHistoryQuery;
 import com.vw.consent.management.system.consent.application.query.GetConsentAuditHistoryResponse;
+import com.vw.consent.management.system.consent.domain.exceptions.UserIdNotFoundException;
+import com.vw.consent.management.system.user.domain.exception.DuplicateMailException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +38,10 @@ public class ConsentController {
                 listOfGetConsentAuditHistoryResponseToResponseDTO(responseList);
 
         return ResponseEntity.ok(responseDTO);
+    }
+
+    @ExceptionHandler({UserIdNotFoundException.class})
+    public ResponseEntity<String> userNotExistsException(UserIdNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

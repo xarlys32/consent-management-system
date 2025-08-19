@@ -36,12 +36,21 @@ public class User extends BaseEntity<UserId> {
 
     public UserConsentCreateEvent createUser() {
         userCreatedAt = new UserCreatedAt(Instant.now());
-        return new UserConsentCreateEvent(this);
+        if (userConsent == null) {
+            return null;
+        }
+        return new UserConsentCreateEvent(getId().getValue(),
+                getUserEmail().getValue(),
+                userConsent.asMap(),
+                userCreatedAt.getValue());
     }
 
     public UserConsentUpdateEvent updateUserConsent(UserConsent userConsent) {
-        this.userConsent = userConsent;
-        return new UserConsentUpdateEvent(this);
+        this.userConsent.updateConsent(userConsent.asMap());
+        return new UserConsentUpdateEvent(getId().getValue(),
+                getUserEmail().getValue(),
+                userConsent.asMap(),
+                getUserCreatedAt().getValue());
     }
 
     public static Builder builder() {

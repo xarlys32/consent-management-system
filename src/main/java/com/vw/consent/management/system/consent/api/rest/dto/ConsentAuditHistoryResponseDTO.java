@@ -6,10 +6,9 @@ import lombok.Data;
 import java.util.List;
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
-public class ConsentAuditHistoryResponseDTO {
-    private UUID userId;
-    private String email;
-    private List<ConsentDTO> consents;
+
+public record ConsentAuditHistoryResponseDTO (UUID userId,
+        String email,
+        List<ConsentDTO> consents){
+
 }
