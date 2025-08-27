@@ -1,5 +1,7 @@
 package com.vw.consent.management.system.user.application.command;
 
-public record CreateUserCommand(String email, String consentType, boolean enabled) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateUserCommand(@NotBlank String email, String consentType, boolean enabled) {
 }
 
