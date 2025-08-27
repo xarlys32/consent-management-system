@@ -1,5 +1,6 @@
 package com.vw.consent.management.system.user.domain.entity;
 
+import com.vw.consent.management.system.shared.domain.valueobject.ConsentType;
 import com.vw.consent.management.system.shared.domain.valueobject.UserId;
 import com.vw.consent.management.system.user.domain.event.UserConsentCreateEvent;
 import com.vw.consent.management.system.user.domain.valueobject.UserConsent;
@@ -24,7 +25,7 @@ public class UserTest {
         // Arrange
         UserId userId = new UserId(UUID.randomUUID());
         UserEmail userEmail = new UserEmail("test@mail.com");
-        UserConsent userConsent = new UserConsent(Map.of("sms_notifications", true));
+        UserConsent userConsent = new UserConsent(Map.of(ConsentType.EMAIL_NOTIFICATIONS, true));
         UserCreatedAt userCreatedAt = new UserCreatedAt(Instant.now());
 
         User user = User.builder()
@@ -40,16 +41,16 @@ public class UserTest {
         // Assert
         assertNotNull(event);
         assertEquals(userId.getValue(), event.getUserId());
-        assertEquals(userEmail.getValue(), event.getEmail());
-        assertEquals(userConsent.asMap(), event.getConsents());
-        assertNotNull(event.getCreatedAt());
+        assertEquals(userEmail.getValue(), event.getUserEmail());
+        assertEquals(userConsent.asMap(), event.getUserConsent());
+        assertNotNull(event.getUserCreatedAt());
     }
 
     @Test
     void getters_shouldReturnCorrectValues() {
         UserId userId = new UserId(UUID.randomUUID());
         UserEmail userEmail = new UserEmail("user@mail.com");
-        UserConsent userConsent = new UserConsent(Map.of("sms_notifications", false));
+        UserConsent userConsent = new UserConsent(Map.of(ConsentType.EMAIL_NOTIFICATIONS, false));
         UserCreatedAt userCreatedAt = new UserCreatedAt(Instant.now());
 
         User user = User.builder()

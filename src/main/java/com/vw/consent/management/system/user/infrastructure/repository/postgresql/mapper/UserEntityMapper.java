@@ -18,21 +18,14 @@ public class UserEntityMapper {
     public GetUserByEmailResponse userEntityToGetUserByEmailResponse(UserEntity userEntity) {
         return new GetUserByEmailResponse(userEntity.getId(),
                 userEntity.getEmail(),
-                userEntity.getConsent() != null ? userEntity.getConsent().entrySet().stream()
-                        .collect(Collectors.toMap(
-                                e -> ConsentType.fromValue(
-                                        e.getKey()).orElseThrow(() -> new IllegalArgumentException("")), Map.Entry::getValue)) : null,
+                mapStringToConsent(userEntity.getConsent()),
                 userEntity.getCreatedAt());
     }
 
     public UserEntity userToUserEntityInsert(User user) {
         return UserEntity.builder()
                 .email(user.getUserEmail().getValue())
-                .consent(user.getUserConsent() == null ? null : user.getUserConsent().asMap().entrySet().stream()
-                        .collect(Collectors.toMap(
-                                entry -> entry.getKey().toString(),
-                                Map.Entry::getValue
-                        )))
+                .consent(userConsentToMap(user.getUserConsent()))
                 .createdAt(user.getUserCreatedAt().getValue())
                 .build();
     }
@@ -41,11 +34,7 @@ public class UserEntityMapper {
         return UserEntity.builder()
                 .id(user.getId().getValue())
                 .email(user.getUserEmail().getValue())
-                .consent(user.getUserConsent().asMap().entrySet().stream()
-                        .collect(Collectors.toMap(
-                                entry -> entry.getKey().toString(),
-                                Map.Entry::getValue
-                        )))
+                .consent(userConsentToMap(user.getUserConsent()))
                 .createdAt(user.getUserCreatedAt().getValue())
                 .build();
     }
@@ -59,5 +48,24 @@ public class UserEntityMapper {
                                 e.getKey()).orElseThrow(()-> new IllegalArgumentException("")), Map.Entry::getValue))))
                 .userCreatedAt(new UserCreatedAt(userEntity.getCreatedAt()))
                 .build();
+    }
+
+    private Map<String, Boolean> userConsentToMap(UserConsent consent) {
+        if (consent == null) return null;
+        return consent.asMap().entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().toString(),
+                        Map.Entry::getValue
+                ));
+    }
+
+    private Map<ConsentType, Boolean> mapStringToConsent(Map<String, Boolean> consent) {
+        if (consent == null) return null;
+        return consent.entrySet().stream()
+                .collect(Collectors.toMap(
+                        e -> ConsentType.fromValue(e.getKey())
+                                .orElseThrow(() -> new IllegalArgumentException("Consent type inválido: " + e.getKey())),
+                        Map.Entry::getValue
+                ));
     }
 }

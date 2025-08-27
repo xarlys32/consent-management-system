@@ -4,6 +4,7 @@ import com.vw.consent.management.system.user.application.mapper.UserApplicationM
 import com.vw.consent.management.system.user.application.query.GetUserByEmailQuery;
 import com.vw.consent.management.system.user.application.query.GetUserByEmailResponse;
 import com.vw.consent.management.system.user.application.port.out.UserRepository;
+import com.vw.consent.management.system.user.domain.exception.UserEmailNotFoundException;
 import com.vw.consent.management.system.user.domain.valueobject.UserEmail;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,6 @@ public class GetUserByEmailQueryHandler {
 
     public GetUserByEmailResponse getUserByEmail(GetUserByEmailQuery getUserQuery) {
         return userRepository.findUserByEmail(new UserEmail(getUserQuery.email())).map(
-                userApplicationMapper::userToGetUserByEmailResponse).orElseThrow(()-> new IllegalArgumentException(""));
+                userApplicationMapper::userToGetUserByEmailResponse).orElseThrow(()-> new UserEmailNotFoundException(getUserQuery.email()));
     }
 }

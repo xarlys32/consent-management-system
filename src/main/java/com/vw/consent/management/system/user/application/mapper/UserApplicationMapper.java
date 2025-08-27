@@ -12,6 +12,7 @@ import com.vw.consent.management.system.user.domain.valueobject.UserConsent;
 import com.vw.consent.management.system.user.domain.valueobject.UserEmail;
 import org.springframework.stereotype.Component;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,17 +20,16 @@ public class UserApplicationMapper {
     public User createUserCommandToUser(CreateUserCommand createUserCommand){
         return User.builder()
                 .userEmail(new UserEmail(createUserCommand.email()))
-                .userConsent(createUserCommand.consentType().isEmpty() ? null : new UserConsent( Map.of(
-                        ConsentType.fromValue(createUserCommand.consentType()).orElseThrow(() -> new ConsentTypeNotValidException(createUserCommand.consentType())),
-                        createUserCommand.enabled()
-                )))
+                .userConsent(buildUserConsent(createUserCommand.consentType(), createUserCommand.enabled()))
                 .build();
     }
 
     public CreateUserResponse userToCreateUserResponse(User user) {
         return new CreateUserResponse(user.getId().getValue(),
                 user.getUserEmail().getValue(),
-                user.getUserConsent()!= null ? user.getUserConsent().asMap() : null);
+                Optional.ofNullable(user.getUserConsent())
+                        .map(UserConsent::asMap)
+                        .orElse(null));
     }
 
     public GetUserByEmailResponse userToGetUserByEmailResponse(User user) {
@@ -41,14 +41,7 @@ public class UserApplicationMapper {
         );
     }
 
-    public User updateUserConsentCommandToUser(UpdateUserConsentCommand updateUserConsentCommand) {
-        return com.vw.consent.management.system.user.domain.entity.User.builder()
-                .userEmail(new UserEmail(updateUserConsentCommand.email()))
-                .userConsent(new UserConsent(Map.of(ConsentType.fromValue(
-                        updateUserConsentCommand.consentType()).orElseThrow(() -> new IllegalArgumentException("Invalid consent type: "
-                        + updateUserConsentCommand.consentType())), updateUserConsentCommand.enabled())))
-                .build();
-    }
+
 
     public UpdateUserConsentResponse userToUpdateUserConsentResponse(User user) {
         return new UpdateUserConsentResponse(
@@ -60,4 +53,14 @@ public class UserApplicationMapper {
         );
     }
 
+    private UserConsent buildUserConsent(String consentType, boolean enabled) {
+        if (consentType == null || consentType.isBlank()) {
+            return null;
+        }
+
+        ConsentType type = ConsentType.fromValue(consentType)
+                .orElseThrow(() -> new ConsentTypeNotValidException(consentType));
+
+        return new UserConsent(Map.of(type, enabled));
+    }
 }
