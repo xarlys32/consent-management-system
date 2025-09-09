@@ -39,7 +39,7 @@ public class UserExceptionsHandler {
                 .stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .findFirst()
-                .orElse("Datos inválidos");
+                .orElse("Invalid Data");
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 

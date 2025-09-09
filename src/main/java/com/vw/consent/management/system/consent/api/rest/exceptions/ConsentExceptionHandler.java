@@ -12,4 +12,9 @@ public class ConsentExceptionHandler {
     public ResponseEntity<String> userNotExistsException(UserIdNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<String> illegalIdArgument(IllegalArgumentException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

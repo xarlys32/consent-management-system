@@ -27,7 +27,7 @@ public class ConsentController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<ConsentAuditHistoryResponseDTO> getConsentAuditByUserId(@Valid @PathVariable String userId) {
+    public ResponseEntity<ConsentAuditHistoryResponseDTO> getConsentAuditByUserId(@PathVariable String userId) {
         List<GetConsentAuditHistoryResponse> responseList = getConsentAuditHistoryQueryHandler.getConsentAuditHistory(
                 new GetConsentAuditHistoryQuery(UUID.fromString(userId)));
 
