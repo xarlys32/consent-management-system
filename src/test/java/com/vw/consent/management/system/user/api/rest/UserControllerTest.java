@@ -1,7 +1,7 @@
 package com.vw.consent.management.system.user.api.rest;
 
 import com.vw.consent.management.system.user.api.rest.dto.UserCreatedResponseDTO;
-import com.vw.consent.management.system.user.api.rest.dto.UserGetResponseDTO;
+import com.vw.consent.management.system.user.api.rest.dto.UserGetView;
 import com.vw.consent.management.system.user.api.rest.dto.UserUpdatedResponseDTO;
 import com.vw.consent.management.system.user.api.rest.mapper.UserDTOMapper;
 import com.vw.consent.management.system.user.application.command.CreateUserCommand;
@@ -61,12 +61,12 @@ class UserControllerTest {
     void getUser_ok() {
         String email = "test@mail.com";
         GetUserByEmailResponse response = mock(GetUserByEmailResponse.class);
-        UserGetResponseDTO dto = mock(UserGetResponseDTO.class);
+        UserGetView dto = mock(UserGetView.class);
 
         when(getUserByEmailQueryHandler.getUserByEmail(any(GetUserByEmailQuery.class))).thenReturn(response);
         when(userDTOMapper.getUserByEmailResponseToDTO(response)).thenReturn(dto);
 
-        ResponseEntity<UserGetResponseDTO> result = userController.getUser(email);
+        ResponseEntity<UserGetView> result = userController.getUser(email);
 
         assertEquals(dto, result.getBody());
         assertEquals(200, result.getStatusCodeValue());

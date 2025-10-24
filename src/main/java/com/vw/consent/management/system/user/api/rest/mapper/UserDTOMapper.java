@@ -1,7 +1,7 @@
 package com.vw.consent.management.system.user.api.rest.mapper;
 
 import com.vw.consent.management.system.user.api.rest.dto.UserCreatedResponseDTO;
-import com.vw.consent.management.system.user.api.rest.dto.UserGetResponseDTO;
+import com.vw.consent.management.system.user.api.rest.dto.UserGetView;
 import com.vw.consent.management.system.user.api.rest.dto.UserUpdatedResponseDTO;
 import com.vw.consent.management.system.user.application.command.CreateUserResponse;
 import com.vw.consent.management.system.user.application.command.UpdateUserConsentResponse;
@@ -24,8 +24,8 @@ public class UserDTOMapper {
                 updateUserConsentResponse.email(),
                 updateUserConsentResponse.consent());
     }
-    public UserGetResponseDTO getUserByEmailResponseToDTO(GetUserByEmailResponse getUserByEmailResponse) {
-        return new UserGetResponseDTO(getUserByEmailResponse.id(),
+    public UserGetView getUserByEmailResponseToDTO(GetUserByEmailResponse getUserByEmailResponse) {
+        return new UserGetView(getUserByEmailResponse.id(),
                 getUserByEmailResponse.email(),
                 getUserByEmailResponse.consent().entrySet().stream()
                         .collect(Collectors.toMap(e -> e.getKey().name(), Map.Entry::getValue)),

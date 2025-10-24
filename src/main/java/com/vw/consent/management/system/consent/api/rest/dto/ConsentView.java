@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class ConsentDTO {
+public class ConsentView {
     private String consentType;
     private boolean enabled;
     private Instant updateTimestamp;

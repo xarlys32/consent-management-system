@@ -1,4 +1,4 @@
-package com.vw.consent.management.system.user.api.rest.dto;
+package com.vw.consent.management.system.user.application.query.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 @Builder
 @AllArgsConstructor
-public class UserGetResponseDTO {
+public class UserGetView {
     private UUID id;
     private String email;
     private Map<String, Boolean> consents;

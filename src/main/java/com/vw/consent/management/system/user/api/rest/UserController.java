@@ -1,7 +1,7 @@
 package com.vw.consent.management.system.user.api.rest;
 
 import com.vw.consent.management.system.user.api.rest.dto.UserCreatedResponseDTO;
-import com.vw.consent.management.system.user.api.rest.dto.UserGetResponseDTO;
+import com.vw.consent.management.system.user.api.rest.dto.UserGetView;
 import com.vw.consent.management.system.user.api.rest.dto.UserUpdatedResponseDTO;
 import com.vw.consent.management.system.user.api.rest.mapper.UserDTOMapper;
 import com.vw.consent.management.system.user.application.command.UpdateUserConsentCommand;
@@ -45,9 +45,9 @@ public class UserController {
 
     @GetMapping("/")
     @Operation(summary = "Get user")
-    public ResponseEntity<UserGetResponseDTO> getUser(@RequestParam String email) {
+    public ResponseEntity<UserGetView> getUser(@RequestParam String email) {
         GetUserByEmailResponse getUserResponse = getUserByEmailQueryHandler.getUserByEmail(new GetUserByEmailQuery(email));
-        UserGetResponseDTO responseDTO = userDTOMapper.getUserByEmailResponseToDTO(getUserResponse);
+        UserGetView responseDTO = userDTOMapper.getUserByEmailResponseToDTO(getUserResponse);
         return ResponseEntity.ok(responseDTO);
 
     }
