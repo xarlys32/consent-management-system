@@ -3,11 +3,9 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.vw.consent.management.system.kafka_model.dto;
+package com.vw.consent.management.system.common.infrastructure.kafka_model.dto;
 
-import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
-import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
@@ -78,7 +76,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
 
   private java.lang.CharSequence userId;
   private java.lang.CharSequence email;
-  private com.vw.consent.management.system.kafka_model.dto.ConsentType consentType;
+  private ConsentType consentType;
   private boolean enabled;
   private java.time.Instant eventTimestamp;
 
@@ -97,7 +95,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
    * @param enabled The new value for enabled
    * @param eventTimestamp The new value for eventTimestamp
    */
-  public ConsentChangeEvent(java.lang.CharSequence userId, java.lang.CharSequence email, com.vw.consent.management.system.kafka_model.dto.ConsentType consentType, java.lang.Boolean enabled, java.time.Instant eventTimestamp) {
+  public ConsentChangeEvent(java.lang.CharSequence userId, java.lang.CharSequence email, ConsentType consentType, java.lang.Boolean enabled, java.time.Instant eventTimestamp) {
     this.userId = userId;
     this.email = email;
     this.consentType = consentType;
@@ -146,7 +144,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
     switch (field$) {
     case 0: userId = (java.lang.CharSequence)value$; break;
     case 1: email = (java.lang.CharSequence)value$; break;
-    case 2: consentType = (com.vw.consent.management.system.kafka_model.dto.ConsentType)value$; break;
+    case 2: consentType = (ConsentType)value$; break;
     case 3: enabled = (java.lang.Boolean)value$; break;
     case 4: eventTimestamp = (java.time.Instant)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
@@ -191,7 +189,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
    * Gets the value of the 'consentType' field.
    * @return The value of the 'consentType' field.
    */
-  public com.vw.consent.management.system.kafka_model.dto.ConsentType getConsentType() {
+  public ConsentType getConsentType() {
     return consentType;
   }
 
@@ -200,7 +198,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
    * Sets the value of the 'consentType' field.
    * @param value the value to set.
    */
-  public void setConsentType(com.vw.consent.management.system.kafka_model.dto.ConsentType value) {
+  public void setConsentType(ConsentType value) {
     this.consentType = value;
   }
 
@@ -242,8 +240,8 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
    * Creates a new ConsentChangeEvent RecordBuilder.
    * @return A new ConsentChangeEvent RecordBuilder
    */
-  public static com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder newBuilder() {
-    return new com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder();
+  public static ConsentChangeEvent.Builder newBuilder() {
+    return new ConsentChangeEvent.Builder();
   }
 
   /**
@@ -251,11 +249,11 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
    * @param other The existing builder to copy.
    * @return A new ConsentChangeEvent RecordBuilder
    */
-  public static com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder newBuilder(com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder other) {
+  public static ConsentChangeEvent.Builder newBuilder(ConsentChangeEvent.Builder other) {
     if (other == null) {
-      return new com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder();
+      return new ConsentChangeEvent.Builder();
     } else {
-      return new com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder(other);
+      return new ConsentChangeEvent.Builder(other);
     }
   }
 
@@ -264,11 +262,11 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
    * @param other The existing instance to copy.
    * @return A new ConsentChangeEvent RecordBuilder
    */
-  public static com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder newBuilder(com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent other) {
+  public static ConsentChangeEvent.Builder newBuilder(ConsentChangeEvent other) {
     if (other == null) {
-      return new com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder();
+      return new ConsentChangeEvent.Builder();
     } else {
-      return new com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder(other);
+      return new ConsentChangeEvent.Builder(other);
     }
   }
 
@@ -281,7 +279,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
 
     private java.lang.CharSequence userId;
     private java.lang.CharSequence email;
-    private com.vw.consent.management.system.kafka_model.dto.ConsentType consentType;
+    private ConsentType consentType;
     private boolean enabled;
     private java.time.Instant eventTimestamp;
 
@@ -294,7 +292,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder other) {
+    private Builder(ConsentChangeEvent.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.userId)) {
         this.userId = data().deepCopy(fields()[0].schema(), other.userId);
@@ -322,7 +320,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
      * Creates a Builder by copying an existing ConsentChangeEvent instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent other) {
+    private Builder(ConsentChangeEvent other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.userId)) {
         this.userId = data().deepCopy(fields()[0].schema(), other.userId);
@@ -360,7 +358,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'userId'.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder setUserId(java.lang.CharSequence value) {
+    public ConsentChangeEvent.Builder setUserId(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.userId = value;
       fieldSetFlags()[0] = true;
@@ -380,7 +378,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'userId' field.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder clearUserId() {
+    public ConsentChangeEvent.Builder clearUserId() {
       userId = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -400,7 +398,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'email'.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder setEmail(java.lang.CharSequence value) {
+    public ConsentChangeEvent.Builder setEmail(java.lang.CharSequence value) {
       validate(fields()[1], value);
       this.email = value;
       fieldSetFlags()[1] = true;
@@ -420,7 +418,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'email' field.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder clearEmail() {
+    public ConsentChangeEvent.Builder clearEmail() {
       email = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -430,7 +428,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * Gets the value of the 'consentType' field.
       * @return The value.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentType getConsentType() {
+    public ConsentType getConsentType() {
       return consentType;
     }
 
@@ -440,7 +438,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'consentType'.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder setConsentType(com.vw.consent.management.system.kafka_model.dto.ConsentType value) {
+    public ConsentChangeEvent.Builder setConsentType(ConsentType value) {
       validate(fields()[2], value);
       this.consentType = value;
       fieldSetFlags()[2] = true;
@@ -460,7 +458,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'consentType' field.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder clearConsentType() {
+    public ConsentChangeEvent.Builder clearConsentType() {
       consentType = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -480,7 +478,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'enabled'.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder setEnabled(boolean value) {
+    public ConsentChangeEvent.Builder setEnabled(boolean value) {
       validate(fields()[3], value);
       this.enabled = value;
       fieldSetFlags()[3] = true;
@@ -500,7 +498,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'enabled' field.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder clearEnabled() {
+    public ConsentChangeEvent.Builder clearEnabled() {
       fieldSetFlags()[3] = false;
       return this;
     }
@@ -519,7 +517,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'eventTimestamp'.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder setEventTimestamp(java.time.Instant value) {
+    public ConsentChangeEvent.Builder setEventTimestamp(java.time.Instant value) {
       validate(fields()[4], value);
       this.eventTimestamp = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
       fieldSetFlags()[4] = true;
@@ -539,7 +537,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
       * Clears the value of the 'eventTimestamp' field.
       * @return This builder.
       */
-    public com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent.Builder clearEventTimestamp() {
+    public ConsentChangeEvent.Builder clearEventTimestamp() {
       fieldSetFlags()[4] = false;
       return this;
     }
@@ -551,7 +549,7 @@ public class ConsentChangeEvent extends org.apache.avro.specific.SpecificRecordB
         ConsentChangeEvent record = new ConsentChangeEvent();
         record.userId = fieldSetFlags()[0] ? this.userId : (java.lang.CharSequence) defaultValue(fields()[0]);
         record.email = fieldSetFlags()[1] ? this.email : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.consentType = fieldSetFlags()[2] ? this.consentType : (com.vw.consent.management.system.kafka_model.dto.ConsentType) defaultValue(fields()[2]);
+        record.consentType = fieldSetFlags()[2] ? this.consentType : (ConsentType) defaultValue(fields()[2]);
         record.enabled = fieldSetFlags()[3] ? this.enabled : (java.lang.Boolean) defaultValue(fields()[3]);
         record.eventTimestamp = fieldSetFlags()[4] ? this.eventTimestamp : (java.time.Instant) defaultValue(fields()[4]);
         return record;

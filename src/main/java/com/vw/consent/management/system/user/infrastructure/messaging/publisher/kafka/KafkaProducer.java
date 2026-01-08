@@ -1,6 +1,6 @@
 package com.vw.consent.management.system.user.infrastructure.messaging.publisher.kafka;
 
-import com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent;
+import com.vw.consent.management.system.common.infrastructure.kafka_model.dto.ConsentChangeEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 

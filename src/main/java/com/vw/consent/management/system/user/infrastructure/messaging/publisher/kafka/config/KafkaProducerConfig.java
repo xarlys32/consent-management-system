@@ -1,6 +1,6 @@
 package com.vw.consent.management.system.user.infrastructure.messaging.publisher.kafka.config;
 
-import com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent;
+import com.vw.consent.management.system.common.infrastructure.kafka_model.dto.ConsentChangeEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;

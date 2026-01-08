@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.vw.consent.management.system.kafka_model.dto;
+package com.vw.consent.management.system.common.infrastructure.kafka_model.dto;
 @org.apache.avro.specific.AvroGenerated
 public enum ConsentType implements org.apache.avro.generic.GenericEnumSymbol<ConsentType> {
   EMAIL_NOTIFICATIONS, SMS_NOTIFICATIONS  ;

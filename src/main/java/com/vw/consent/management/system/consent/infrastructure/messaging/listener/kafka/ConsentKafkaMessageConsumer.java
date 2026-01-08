@@ -3,7 +3,7 @@ package com.vw.consent.management.system.consent.infrastructure.messaging.listen
 import com.vw.consent.management.system.consent.application.command.AddConsentAuditCommand;
 import com.vw.consent.management.system.consent.application.handler.AddConsentAuditCommandHandler;
 import com.vw.consent.management.system.consent.infrastructure.messaging.listener.kafka.config.KafkaConsumer;
-import com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent;
+import com.vw.consent.management.system.common.infrastructure.kafka_model.dto.ConsentChangeEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;

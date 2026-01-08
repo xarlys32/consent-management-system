@@ -1,7 +1,7 @@
 package com.vw.consent.management.system.user.infrastructure.messaging.publisher.kafka.mapper;
 
-import com.vw.consent.management.system.kafka_model.dto.ConsentChangeEvent;
-import com.vw.consent.management.system.kafka_model.dto.ConsentType;
+import com.vw.consent.management.system.common.infrastructure.kafka_model.dto.ConsentChangeEvent;
+import com.vw.consent.management.system.common.infrastructure.kafka_model.dto.ConsentType;
 import com.vw.consent.management.system.user.domain.event.UserEvent;
 import org.springframework.stereotype.Component;
 
