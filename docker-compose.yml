@@ -55,7 +55,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./infrastructure/migrations/postgres:/docker-entrypoint-initdb.d:ro
+      - ./infrastructure/migrations/user/postgres:/docker-entrypoint-initdb.d:ro
 
   mongodb:
     image: mongo:latest
@@ -66,7 +66,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: consentPass
     volumes:
       - mongo_data:/data/db
-      - ./infrastructure/migrations/mongodb:/docker-entrypoint-initdb.d:ro
+      - ./infrastructure/migrations/consent/mongodb:/docker-entrypoint-initdb.d:ro
 
 volumes:
   mongo_data:
